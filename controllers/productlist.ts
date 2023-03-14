@@ -15,53 +15,67 @@ router.get("/tooted", (req: Request, res: Response) => {
     res.send(tooted)
 })
 
-router.get("/kustuta-toode/:index", (req: Request, res: Response) => {
-    tooted.splice(Number(req.params.index), 1)
+router.delete("/kustuta-toode/:index", (req: Request, res: Response) => {
+    if (/^[0-9]+$/.test(req.params.index)) {
+        tooted.splice(Number(req.params.index), 1)
+    }
     res.send(tooted)
 })
 
-router.get("/kustuta-toode-2/:index", (req: Request, res: Response) => {
-    tooted.splice(Number(req.params.index), 1)
-    res.send("Toode kustutatud")
+router.delete("/kustuta-toode-2/:index", (req: Request, res: Response) => {
+    if (/^[0-9]+$/.test(req.params.index)) {
+        tooted.splice(Number(req.params.index), 1)
+        res.send("Toode kustutatud")
+    } else {
+        res.send("Toote kustutamiseks tuleb sisestada number")
+    }
 })
 
-router.get("/lisa-toode/:id/:nimi/:hind/:aktiivne", (req: Request, res: Response) => {
-    tooted.push(
-        new Toode(
-            Number(req.params.id),
-            req.params.nimi,
-            Number(req.params.hind),
-            req.params.aktiivne === "true")
-    )
+router.post("/lisa-toode/:id/:nimi/:hind/:aktiivne", (req: Request, res: Response) => {
+    if (/^[0-9]+$/.test(req.params.id) && /^[0-9]+$/.test(req.params.hind)) {
+        tooted.push(
+            new Toode(
+                Number(req.params.id),
+                req.params.nimi,
+                Number(req.params.hind),
+                req.params.aktiivne === "true")
+        )
+    }
     res.send(tooted)
 })
 
-router.get("/hind-dollaritesse/:kurss", (req: Request, res: Response) => {
-    for (let index = 0; index < tooted.length; index++) {
-        tooted[index].price = tooted[index].price * Number(req.params.kurss);
+router.patch("/hind-dollaritesse/:kurss", (req: Request, res: Response) => {
+    if (/^[0-9]+$/.test(req.params.kurss)) {
+        for (let index = 0; index < tooted.length; index++) {
+            tooted[index].price = tooted[index].price * Number(req.params.kurss);
+        }
     }
     res.send(tooted)
 });
 
-router.get("/kustuta-koik", (req: Request, res: Response) => {
+router.delete("/kustuta-koik", (req: Request, res: Response) => {
     tooted.splice(0, tooted.length)
     res.send(tooted)
 })
 
-router.get("/deaktiveeri", (req: Request, res: Response) => {
+router.patch("/deaktiveeri", (req: Request, res: Response) => {
     tooted.forEach((toode) => {
         toode.isActive = false
     })
     res.send(tooted)
 })
 router.get("/annatoode/:nr", (req: Request, res: Response) => {
-    let valitudToode: Toode | null = null
-    tooted.forEach((toode) => {
-        if (toode.id == parseInt(req.params.nr)) {
-            valitudToode = toode
-        }
-    })
-    res.send(valitudToode)
+    if (/^[0-9]+$/.test(req.params.nr)) {
+        let valitudToode: Toode | null = null
+        tooted.forEach((toode) => {
+            if (toode.id == parseInt(req.params.nr)) {
+                valitudToode = toode
+            }
+        })
+        res.send(valitudToode)
+    } else {
+        res.send(null)
+    }
 })
 
 router.get("/kallistoode", (req: Request, res:Response) => {

@@ -1,5 +1,4 @@
 import React, {useState, useRef, useEffect} from "react";
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
@@ -16,20 +15,20 @@ function App() {
   }, []);
 
   const kustuta = (index) => {
-    fetch("http://localhost:3000/kustuta-toode/" + index)
+    fetch("http://localhost:3000/kustuta-toode/" + index, {"method": "DELETE"})
         .then(res => res.json())
         .then(json => setTooted(json))
   }
 
   const lisa = () => {
-    fetch(`http://localhost:3000/lisa-toode/${idRef.current.value}/${nameRef.current.value}/${priceRef.current.value}/${isActiveRef.current.value}`)
+    fetch(`http://localhost:3000/lisa-toode/${idRef.current.value}/${nameRef.current.value}/${priceRef.current.value}/${isActiveRef.current.value}`, {"method": "POST"})
         .then(res => res.json())
         .then(json => setTooted(json));
   }
 
   const dollariteks = () => {
       const kurss = 1.1;
-      fetch("http://localhost:3000/hind-dollaritesse/" + kurss)
+      fetch("http://localhost:3000/hind-dollaritesse/" + kurss, {"method": "PATCH"})
           .then(res => res.json())
           .then(json => setTooted(json));
 
