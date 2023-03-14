@@ -3,12 +3,15 @@ import cors from 'cors'
 import stringsController from "./controllers/strings";
 import productController from "./controllers/products";
 import productsListController from "./controllers/productlist";
+import bodyParser from "body-parser";
 
 const app: Express = express();
 
 app.use(cors({
     origin: ['http://localhost:3006']
 }))
+
+app.use(bodyParser.json())
 
 app.get('/', (req: Request, res: Response) => {
     res.send('Express + TypeScript Server');

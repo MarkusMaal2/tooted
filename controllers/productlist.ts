@@ -31,14 +31,14 @@ router.delete("/kustuta-toode-2/:index", (req: Request, res: Response) => {
     }
 })
 
-router.post("/lisa-toode/:id/:nimi/:hind/:aktiivne", (req: Request, res: Response) => {
-    if (/^[0-9]+$/.test(req.params.id) && /^[0-9]+$/.test(req.params.hind)) {
+router.post("/lisa-toode/", (req: Request, res: Response) => {
+    if (/^[0-9]+$/.test(req.body.id) && /^[0-9]+$/.test(req.body.hind)) {
         tooted.push(
             new Toode(
-                Number(req.params.id),
-                req.params.nimi,
-                Number(req.params.hind),
-                req.params.aktiivne === "true")
+                Number(req.body.id),
+                req.body.nimi,
+                Number(req.body.hind),
+                req.body.aktiivne === "true")
         )
     }
     res.send(tooted)

@@ -21,7 +21,13 @@ function App() {
   }
 
   const lisa = () => {
-    fetch(`http://localhost:3000/lisa-toode/${idRef.current.value}/${nameRef.current.value}/${priceRef.current.value}/${isActiveRef.current.value}`, {"method": "POST"})
+      const uusToode = {
+          "id": idRef.current.value,
+          "nimi": nameRef.current.value,
+          "hind": priceRef.current.value,
+          "aktiivne": isActiveRef.current.value
+      }
+    fetch(`http://localhost:3000/lisa-toode/`, {"method": "POST", "body": JSON.stringify(uusToode)})
         .then(res => res.json())
         .then(json => setTooted(json));
   }
