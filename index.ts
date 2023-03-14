@@ -6,7 +6,9 @@ import productsListController from "./controllers/productlist";
 
 const app: Express = express();
 
-app.use(cors())
+app.use(cors({
+    origin: ['http://localhost:3006']
+}))
 
 app.get('/', (req: Request, res: Response) => {
     res.send('Express + TypeScript Server');
