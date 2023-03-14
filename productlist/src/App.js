@@ -34,7 +34,7 @@ function App() {
 
   const dollariteks = () => {
       const kurss = 1.1;
-      fetch("http://localhost:3000/hind-dollaritesse/" + kurss, {"method": "patch"})
+      fetch("http://localhost:3000/hind-dollaritesse/" + kurss.toString(), {"method": "PATCH"})
           .then(res => res.json())
           .then(json => setTooted(json));
 

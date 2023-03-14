@@ -32,7 +32,6 @@ router.delete("/kustuta-toode-2/:index", (req: Request, res: Response) => {
 })
 
 router.post("/lisa-toode/", (req: Request, res: Response) => {
-    console.log(req.body)
     if (/^[0-9]+$/.test(req.body.id) && /^[0-9]+$/.test(req.body.hind)) {
         tooted.push(
             new Toode(
@@ -46,7 +45,7 @@ router.post("/lisa-toode/", (req: Request, res: Response) => {
 })
 
 router.patch("/hind-dollaritesse/:kurss", (req: Request, res: Response) => {
-    if (/^[0-9]+$/.test(req.params.kurss)) {
+    if (/^[0-9]+.[0-9]+$/.test(req.params.kurss)) {
         for (let index = 0; index < tooted.length; index++) {
             tooted[index].price = tooted[index].price * Number(req.params.kurss);
         }
