@@ -1,4 +1,4 @@
-export class Toode {
+export default class Toode {
     constructor (
         private _id: number,
         private _name: string,
@@ -15,6 +15,10 @@ export class Toode {
 
     set name(newName: string) {
         this._name = newName
+    }
+
+    invactive() {
+        this.isActive = !this.isActive
     }
 }
 
