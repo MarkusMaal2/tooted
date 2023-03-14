@@ -32,13 +32,14 @@ router.delete("/kustuta-toode-2/:index", (req: Request, res: Response) => {
 })
 
 router.post("/lisa-toode/", (req: Request, res: Response) => {
+    console.log(req.body)
     if (/^[0-9]+$/.test(req.body.id) && /^[0-9]+$/.test(req.body.hind)) {
         tooted.push(
             new Toode(
                 Number(req.body.id),
                 req.body.nimi,
                 Number(req.body.hind),
-                req.body.aktiivne === "true")
+                req.body.aktiivne === true)
         )
     }
     res.send(tooted)

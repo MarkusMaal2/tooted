@@ -5,16 +5,19 @@
 .App > .add {
   display: flex;
   flex-flow: column;
+  padding: 50px;
 }
 
 .product {
   display: flex;
   flex-flow: row;
   flex-wrap: wrap-reverse;
+  justify-content: center;
 }
 
 .product > div {
   margin: 0 50px 0 0;
+  padding: 2px;
 }
 
 .App-logo {

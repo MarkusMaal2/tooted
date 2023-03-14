@@ -15,7 +15,7 @@ function App() {
   }, []);
 
   const kustuta = (index) => {
-    fetch("http://localhost:3000/kustuta-toode/" + index, {"method": "DELETE"})
+    fetch("http://localhost:3000/kustuta-toode/" + index, {"method": "delete"})
         .then(res => res.json())
         .then(json => setTooted(json))
   }
@@ -25,16 +25,16 @@ function App() {
           "id": idRef.current.value,
           "nimi": nameRef.current.value,
           "hind": priceRef.current.value,
-          "aktiivne": isActiveRef.current.value
-      }
-    fetch(`http://localhost:3000/lisa-toode/`, {"method": "POST", "body": JSON.stringify(uusToode)})
+          "aktiivne": isActiveRef.current.checked
+      };
+    fetch(`http://localhost:3000/lisa-toode/`, {"method": "post", headers: {'Content-Type': 'application/json'}, "body": JSON.stringify(uusToode)})
         .then(res => res.json())
         .then(json => setTooted(json));
   }
 
   const dollariteks = () => {
       const kurss = 1.1;
-      fetch("http://localhost:3000/hind-dollaritesse/" + kurss, {"method": "PATCH"})
+      fetch("http://localhost:3000/hind-dollaritesse/" + kurss, {"method": "patch"})
           .then(res => res.json())
           .then(json => setTooted(json));
 
