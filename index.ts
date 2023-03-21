@@ -4,6 +4,7 @@ import stringsController from "./controllers/strings";
 import productController from "./controllers/products";
 import productsListController from "./controllers/productlist";
 import parcelMachinesController from "./controllers/parcelmachines";
+import eleringController from "./controllers/elering"
 import bodyParser from "body-parser";
 
 const app: Express = express();
@@ -22,6 +23,7 @@ app.get('/', (req: Request, res: Response) => {
 app.use('/', stringsController);
 app.use('/', productsListController);
 app.use('/', parcelMachinesController);
+app.use('/', eleringController)
 app.use('/toode', productController);
 
 app.listen(3000,() => {

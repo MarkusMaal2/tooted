@@ -54,3 +54,23 @@
     transform: rotate(360deg);
   }
 }
+
+th {
+  border: 1px solid #ddd;
+  padding: 12px;
+  background-color: #04AA6D;
+}
+
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.riik {
+  position: absolute;
+  left: 30px;
+}
+
+table {
+  margin-left: 100px;
+}
