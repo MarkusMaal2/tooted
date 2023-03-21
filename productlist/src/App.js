@@ -53,7 +53,7 @@ function App() {
                     {prices.map(data =>
                         <tr key={data.timestamp}>
                             <td>{new Date(data.timestamp * 1000).toISOString().split("T").join(" ").split("Z")[0].split(".")[0]}</td>
-                            <td>{data.price}</td>
+                            <td>{data.price}<span style={{float: "right"}}>&euro;</span></td>
                         </tr>)}
                     </tbody>
                 </table>}
