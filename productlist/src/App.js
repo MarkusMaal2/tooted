@@ -52,7 +52,7 @@ function App() {
                     <div className="riik">{chosenCountry}</div>
                     {prices.map(data =>
                         <tr key={data.timestamp}>
-                            <td>{new Date(data.timestamp * 1000).toISOString()}</td>
+                            <td>{new Date(data.timestamp * 1000).toISOString().split("T").join(" ").split("Z")[0].split(".")[0]}</td>
                             <td>{data.price}</td>
                         </tr>)}
                     </tbody>
