@@ -11,7 +11,6 @@ function App() {
     const endRef = useRef();
 
     useEffect(() => {
-        console.log(start + " " + end)
         if (start !== "" && end !== "") {
             fetch("http://localhost:3000/nord-pool-price?country=" + chosenCountry + "&start=" + start + "&end=" + end)
                 .then(res => res.json())
