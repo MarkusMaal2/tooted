@@ -10,8 +10,8 @@ import bodyParser from "body-parser";
 const app: Express = express();
 
 app.use(cors({
-    origin: ['http://localhost:3006'],
-    methods: `GET, PATCH, POST, DELETE`
+    origin: ["http://localhost:3006", "*"],
+    methods: `GET, PATCH, POST, DELETE, FETCH`
 }))
 
 app.use(bodyParser.json())

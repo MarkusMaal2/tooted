@@ -1,71 +1,65 @@
-import React, {useState, useEffect} from "react";
+import { useRef } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
-    const [fi, setFi] = useState([]);
-    const [ee, setEe] = useState([]);
-    const [lv, setLv] = useState([]);
-    const [lt, setLt] = useState([]);
+    const [prices, setPrices] = useState([]);
+    const [chosenCountry, setChosenCountry] = useState("ee");
+    const [start, setStart] = useState("");
+    const [end, setEnd] = useState("");
+    const startRef = useRef();
+    const endRef = useRef();
 
     useEffect(() => {
-        fetch("http://localhost:3000/nord-pool-price")
-            .then(res => res.json())
-            .then(json => {
-                setFi(json.data.fi)
-                setEe(json.data.ee)
-                setLv(json.data.lv)
-                setLt(json.data.lt)
-            })
-    }, [])
+        console.log(start + " " + end)
+        if (start !== "" && end !== "") {
+            fetch("http://localhost:3000/nord-pool-price?country=" + chosenCountry + "&start=" + start + "&end=" + end)
+                .then(res => res.json())
+                .then(json => {
+                    setPrices(json);
+                });
+        }
+    }, [chosenCountry, start, end]);
 
-    const getDate = (timeStamp) => {
-        return new Date(timeStamp * 1000).toISOString().split("T").join(" ").replace("Z", "").split(".")[0]
+    function updateStart() {
+        const startIso = new Date(startRef.current.value).toISOString();
+        setStart(startIso);
     }
 
-    const getPrice = (price) => {
-        return price.toString() + "€"
+    function updateEnd() {
+        const endIso = new Date(endRef.current.value).toISOString();
+        setEnd(endIso);
     }
 
     return (
-        <div className="App">
-            <table>
-                <thead>
+        <div>
+            <header>
+                <button onClick={() => setChosenCountry("fi")}>Soome</button>
+                <button onClick={() => setChosenCountry("ee")}>Eesti</button>
+                <button onClick={() => setChosenCountry("lv")}>Läti</button>
+                <button onClick={() => setChosenCountry("lt")}>Leedu</button>
+                <input ref={startRef} onChange={updateStart} type="datetime-local" />
+                <input ref={endRef} onChange={updateEnd} type="datetime-local" />
+            </header>
+            <main>
+            {prices.length > 0 &&
+                <table>
+                    <thead>
                     <th>Ajatempel</th>
                     <th>Hind</th>
-                </thead>
-                <tbody>
-                    <div className="riik">Soome</div>
-                    {fi.map(data =>
+                    </thead>
+                    <tbody>
+                    <div className="riik">{chosenCountry}</div>
+                    {prices.map(data =>
                         <tr key={data.timestamp}>
-                            <td>{getDate(data.timestamp)}</td>
-                            <td>{getPrice(data.price)}</td>
-                        </tr>
-                    )}
-                    <div className="riik">Eesti</div>
-                    {ee.map(data =>
-                        <tr key={data.timestamp}>
-                            <td>{getDate(data.timestamp)}</td>
-                            <td>{getPrice(data.price)}</td>
-                        </tr>
-                    )}
-                    <div className="riik">Läti</div>
-                    {lt.map(data =>
-                        <tr key={data.timestamp}>
-                            <td>{getDate(data.timestamp)}</td>
-                            <td>{getPrice(data.price)}</td>
-                        </tr>
-                    )}
-                    <div className="riik">Leedu</div>
-                    {lv.map(data =>
-                        <tr key={data.timestamp}>
-                            <td>{getDate(data.timestamp)}</td>
-                            <td>{getPrice(data.price)}</td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
+                            <td>{new Date(data.timestamp * 1000).toISOString()}</td>
+                            <td>{data.price}</td>
+                        </tr>)}
+                    </tbody>
+                </table>}
+            </main>
         </div>
-    )
+    );
 }
 
 export default App;
